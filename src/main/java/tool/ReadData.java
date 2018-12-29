@@ -1,9 +1,11 @@
 package tool;
 
 import model.UndirectGraph;
+import modelbig.BigGraph;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.math.BigInteger;
 
 public class ReadData {
     private static Logger LOGGER = Logger.getLogger(ReadData.class);
@@ -17,7 +19,7 @@ public class ReadData {
      * @throws IOException
      */
     public static UndirectGraph readUndirectGraph(String datasetName) throws IOException {
-        LOGGER.info("===starting=== "+ReadData.class.getName());
+        LOGGER.info("===starting=== readUndirectGraph");
 
         String filePath=datasetRoot+datasetName;
         LOGGER.info("datasetname: "+datasetName);
@@ -62,6 +64,52 @@ public class ReadData {
         return undirectGraph;
     }
 
+
+    public static BigGraph readBigGraph(String datasetName) throws IOException {
+        LOGGER.info("===starting=== readBigGraph");
+
+        String filePath=datasetRoot+datasetName;
+        LOGGER.info("datasetname: "+datasetName);
+
+        String line=null;
+
+        BigInteger vertexSize=BigInteger.valueOf(0);
+        BigInteger[][] edgeMatrix=null;
+
+        String[] edge=null;
+        BigInteger headV=BigInteger.valueOf(0);
+        BigInteger tailV=BigInteger.valueOf(0);
+
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+            line=br.readLine();
+
+            LOGGER.info("==start== read vertextsize:"+line);
+            vertexSize=new BigInteger(line);
+            edgeMatrix= new BigInteger[][];
+            for (BigInteger i = 0; i < vertexSize; i++) {
+                for (int j = 0; j < vertexSize; j++) {
+                    edgeMatrix[i][j]=0;
+                }
+            }
+
+            LOGGER.info("==start== read edges");
+            for (line = br.readLine(); line != null; line = br.readLine()) {
+                edge=line.split("\t");
+                headV=Integer.parseInt(edge[0]);
+                tailV=Integer.parseInt(edge[1]);
+                edgeMatrix[headV][tailV]=1;
+                edgeMatrix[tailV][headV]=1;  //undirect graph
+            }
+            br.close();
+        }catch (IOException e){
+            LOGGER.error("IO error");
+            System.out.println("readUndirectGraph:"+e);
+        }
+
+        UndirectGraph undirectGraph=new UndirectGraph(edgeMatrix);
+        return undirectGraph;
+    }
 
 
 

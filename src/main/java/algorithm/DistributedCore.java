@@ -16,16 +16,18 @@ import java.util.HashMap;
 public class DistributedCore {
     private static Logger LOGGER = Logger.getLogger(DistributedCore.class);
 
-    public static void main(String[] args) {
+    public ArrayList<Integer> run(String datasetName) {
+        LOGGER.info("===Start Run: DistributedCore===");
+        ArrayList<Integer> allVerticsEstCore=new ArrayList<Integer>(); //all vertics core
 
         /**
          * ===read graph===
          *
          */
-        String datasetName="testdata/undirectgraph6";
-//        String datasetName="testdata/undirectgraph10";
-//        String datasetName="dblp/com-dblp.ungraph";
-
+        if (datasetName == null || datasetName.length() < 1) {
+            LOGGER.error("====!datasetName error!=====");
+            return null;
+        }
 
         UndirectGraph undirectGraph=null;
         try {
@@ -62,7 +64,7 @@ public class DistributedCore {
              * ===check no changed (changed=false) number===
              */
             int noChangedNum=0;
-            ArrayList<Integer> allVerticsEstCore=new ArrayList<Integer>(); //test use!!!
+            allVerticsEstCore.clear();
             for (DeterminVertex e : verticesList) {
                 allVerticsEstCore.add(e.getEstCore());
                 if(e.isChanged() == false){
@@ -108,6 +110,8 @@ public class DistributedCore {
             round++;
             LOGGER.info("==DNOE: re-computing estmate core, ROUND:"+round);
         }
+
+        return allVerticsEstCore;
     }
 
     /***
@@ -117,7 +121,7 @@ public class DistributedCore {
      * @param k u's core
      * @return
      */
-    public static int computedIndex(ArrayList<Integer> neighborsEstCore, int vertexId, int k) {
+    private int computedIndex(ArrayList<Integer> neighborsEstCore, int vertexId, int k) {
         int[] count = new int[k + 1];
         for (int i = 0; i < k+1; i++) {
             count[i] = 0;
@@ -138,7 +142,4 @@ public class DistributedCore {
         }
         return ret;
     }
-
-
-
 }
