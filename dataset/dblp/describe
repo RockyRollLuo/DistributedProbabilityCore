@@ -1,0 +1,5 @@
+com-dblp.ungraph.txt
+# Undirected graph: ../../data/output/dblp.ungraph.txt
+# DBLP
+# Nodes: 317080 Edges: 1049866
+# FromNodeId	ToNodeId
