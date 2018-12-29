@@ -8,8 +8,19 @@ import java.io.*;
 public class ReadData {
     private static Logger LOGGER = Logger.getLogger(ReadData.class);
 
-    public static UndirectGraph readUndirectGraph(String filePath) throws IOException {
-        LOGGER.info("starting-"+ReadData.class.getName());
+    private static String datasetRoot=System.getProperty("user.dir")+"\\dataset\\";
+
+    /**
+     * read a dataset
+     * @param datasetName
+     * @return undirect graoh
+     * @throws IOException
+     */
+    public static UndirectGraph readUndirectGraph(String datasetName) throws IOException {
+        LOGGER.info("===starting=== "+ReadData.class.getName());
+
+        String filePath=datasetRoot+datasetName;
+        LOGGER.info("datasetname: "+datasetName);
 
         String line=null;
 
@@ -19,12 +30,12 @@ public class ReadData {
         String[] edge=null;
         int headV=0;
         int tailV=0;
-        
+
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
             line=br.readLine();
 
-            LOGGER.info("start-read vertextsize:"+line);
+            LOGGER.info("==start== read vertextsize:"+line);
             vertexSize=Integer.parseInt(line);
             edgeMatrix= new int[vertexSize][vertexSize];
             for (int i = 0; i < vertexSize; i++) {
@@ -33,10 +44,8 @@ public class ReadData {
                 }
             }
 
-            LOGGER.info("start-read edges");
+            LOGGER.info("==start== read edges");
             for (line = br.readLine(); line != null; line = br.readLine()) {
-                //readline
-                System.out.println(line);
                 edge=line.split("   ");
                 headV=Integer.parseInt(edge[0]);
                 tailV=Integer.parseInt(edge[1]);
