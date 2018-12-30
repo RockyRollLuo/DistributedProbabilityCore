@@ -1,5 +1,7 @@
 package model;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,6 +21,8 @@ public class NodeServer {
     private String message; //id + core
 
 
+    private static Logger LOGGER = Logger.getLogger(NodeServer.class);
+
     public NodeServer(int nodeId, int estCore) {
         this.nodeId = nodeId;
         this.estCore = estCore;
@@ -26,14 +30,15 @@ public class NodeServer {
         this.message=nodeId+"_"+estCore;
     }
 
+    private static final String host = "127.0.0.1"; //will send message to ip
 
 
-    public void sendMessage() {
-        String host = "127.0.0.1"; //ipdress
-        int port = 55533;
+    public void sendMessage(int sendPort) {
         Socket socket = null;
         try {
-            socket = new Socket(host, port);
+            socket = new Socket(host, sendPort);
+
+            LOGGER.info(this.getClass().getName()+": send message");
 
             OutputStream outputStream = socket.getOutputStream();
 //            String message = "output meassge";
@@ -59,13 +64,13 @@ public class NodeServer {
     }
 
 
-    public void reciveMessage() {
-        int port = 55533;
+    public void reciveMessage(int receivePort) {
         ServerSocket server = null;
         try {
-            server = new ServerSocket(port);
+            server = new ServerSocket(receivePort);
 
-            System.out.println("wait for reciveMessage......");
+            LOGGER.info(this.getClass().getName()+": wait for message......");
+
             Socket socket = server.accept();
             InputStream inputStream = socket.getInputStream();
             byte[] bytes = new byte[1024];
@@ -74,12 +79,14 @@ public class NodeServer {
             while ((len = inputStream.read(bytes)) != -1) {
                 sb.append(new String(bytes, 0, len, "UTF-8"));
             }
-            System.out.println("get message from client: " + sb);
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write("Hello Client,I get the message.".getBytes("UTF-8"));
+
+            LOGGER.info("get message: " + sb);
+
+//            OutputStream outputStream = socket.getOutputStream();
+//            outputStream.write("Hello Client,I get the message:".getBytes("UTF-8"));
 
             inputStream.close();
-            outputStream.close();
+//            outputStream.close();
             socket.close();
             server.close();
         } catch (IOException e) {

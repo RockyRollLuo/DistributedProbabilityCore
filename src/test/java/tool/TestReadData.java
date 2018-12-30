@@ -10,7 +10,7 @@ public class TestReadData {
 
     public static void main(String[] args) {
 
-        String filePath=System.getProperty("user.dir")+"\\dataset\\testdata\\test-undirectgraph";
+        String filePath="testdata\\undirectgraph6";
         System.out.println(filePath);
 
         try {
@@ -28,15 +28,6 @@ public class TestReadData {
             int maxdeg=ug.getMaxdegree();
 
             LOGGER.info("maxdeg:"+maxdeg);
-
-
-
-
-
-
-
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

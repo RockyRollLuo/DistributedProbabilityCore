@@ -40,7 +40,7 @@ public class UndirectGraph {
     }
 
     /***
-     * get one vertex neigborslist
+     * get one vertex neigbors index
      * @param vertex
      * @return
      */

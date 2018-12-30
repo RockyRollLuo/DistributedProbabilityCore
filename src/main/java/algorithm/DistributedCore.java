@@ -16,13 +16,19 @@ import java.util.HashMap;
 public class DistributedCore {
     private static Logger LOGGER = Logger.getLogger(DistributedCore.class);
 
-    public static void main(String[] args) {
+    public ArrayList<Integer> run(String datasetName) {
+        LOGGER.info("===Start Run: DistributedCore===");
+        ArrayList<Integer> allVerticsEstCore=new ArrayList<Integer>(); //all vertics core
 
         /**
          * ===read graph===
          *
          */
-        String datasetName="testdata/test-undirectgraph";
+        if (datasetName == null || datasetName.length() < 1) {
+            LOGGER.error("====!datasetName error!=====");
+            return null;
+        }
+
         UndirectGraph undirectGraph=null;
         try {
             undirectGraph= ReadData.readUndirectGraph(datasetName);
@@ -30,7 +36,7 @@ public class DistributedCore {
             LOGGER.error("read dataset error:",e);
             e.printStackTrace();
         }
-        LOGGER.info("DONE: read graph");
+        LOGGER.info("===DONE: read graph");
 
         /**
          *  ===initial vertex===
@@ -45,26 +51,31 @@ public class DistributedCore {
             determinVertex.setNeighbors(undirectGraph.getVertexNeigbors(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
-        LOGGER.info("DONE: initial vertices");
+        LOGGER.info("===DONE: initial vertices");
 
 
         /**
          * ===vertice send messages loop===
          */
+        int round=0;
         while(true){
 
             /**
              * ===check no changed (changed=false) number===
              */
             int noChangedNum=0;
+            allVerticsEstCore.clear();
             for (DeterminVertex e : verticesList) {
+                allVerticsEstCore.add(e.getEstCore());
                 if(e.isChanged() == false){
                     noChangedNum++;
                 }
             }
-            LOGGER.info("DONE: check no changed number: " + noChangedNum + ". Percent:" + new Double(noChangedNum) / vertexSize);
+            LOGGER.info("==DONE: check no changed number: " + noChangedNum + ". Percent:" + new Double(noChangedNum) / vertexSize);
+            LOGGER.info("All vertics estmate core is:"+ allVerticsEstCore.toString());
+
             if (noChangedNum == vertexSize) {
-                LOGGER.info("ALL VERTICES HAVE CONVERGE!!!");
+                LOGGER.info("======!!!ALL VERTICES HAVE CONVERGE!!!======");
                 break;
             }
 
@@ -82,8 +93,11 @@ public class DistributedCore {
                 determinVertex=verticesList.get(i);
                 ArrayList<Integer> neighborsEstCore = new ArrayList<Integer>();
                 neighbors = determinVertex.getNeighbors(); //get neighbors index
+                //all neighbors
                 for (int vertexId : neighbors) {
                     neighborsEstCore.add(verticesList.get(vertexId).getEstCore());
+
+                    verticesList.get(vertexId).setChanged(false); //after use neighbor's core, set false
                 }
 
                 int t = computedIndex(neighborsEstCore, i, determinVertex.getEstCore()); // new estCore
@@ -92,7 +106,12 @@ public class DistributedCore {
                     determinVertex.setChanged(true);
                 }
             }
+
+            round++;
+            LOGGER.info("==DNOE: re-computing estmate core, ROUND:"+round);
         }
+
+        return allVerticsEstCore;
     }
 
     /***
@@ -102,18 +121,25 @@ public class DistributedCore {
      * @param k u's core
      * @return
      */
-    public static int computedIndex(ArrayList<Integer> neighborsEstCore, int vertexId, int k) {
-        int ret=0;
-        HashMap<Integer, Integer> coreCount = new HashMap<Integer, Integer>();
+    private int computedIndex(ArrayList<Integer> neighborsEstCore, int vertexId, int k) {
+        int[] count = new int[k + 1];
+        for (int i = 0; i < k+1; i++) {
+            count[i] = 0;
+        }
 
+        for (int j : neighborsEstCore) {
+            int index = ((k < j) ? k : j);
+            count[index] = count[index] + 1;
+        }
 
+        for (int i = k; i > 1; i--) {
+            count[i - 1] = count[i - 1] + count[i];
+        }
 
-
-
-
+        int ret=k;
+        while (ret > 1 & count[ret] < ret) {
+            ret = ret - 1;
+        }
         return ret;
     }
-
-
-
 }

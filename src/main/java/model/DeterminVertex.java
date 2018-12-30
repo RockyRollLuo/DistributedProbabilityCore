@@ -27,7 +27,7 @@ public class DeterminVertex {
     public DeterminVertex(int vertexId) {
         this.vertexId = vertexId;
         this.estCore = Integer.MAX_VALUE;
-        this.changed = false;
+        this.changed = true;
     }
 
     /**
@@ -38,7 +38,7 @@ public class DeterminVertex {
     public DeterminVertex(int vertexId, int estCore) {
         this.vertexId = vertexId;
         this.estCore = estCore;
-        this.changed = false;
+        this.changed = true;
     }
 
     public int getNodeId() {
