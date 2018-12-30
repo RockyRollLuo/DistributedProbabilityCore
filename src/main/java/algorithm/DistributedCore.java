@@ -72,7 +72,7 @@ public class DistributedCore {
                 }
             }
             LOGGER.info("==DONE: check no changed number: " + noChangedNum + ". Percent:" + new Double(noChangedNum) / vertexSize);
-            LOGGER.info("All vertics estmate core is:"+ allVerticsEstCore.toString());
+//            LOGGER.info("All estCore: "+ allVerticsEstCore.toString());
 
             if (noChangedNum == vertexSize) {
                 LOGGER.info("======!!!ALL VERTICES HAVE CONVERGE!!!======");

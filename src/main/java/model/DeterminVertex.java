@@ -1,7 +1,7 @@
 /**
  * User: RockyRoll
  * Date: 2018-12-29
- * Deterministic Graph Node
+ * Undirect Graph Vertex
  */
 
 package model;

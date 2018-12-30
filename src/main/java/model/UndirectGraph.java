@@ -8,6 +8,10 @@ public class UndirectGraph {
 
     private int[][] edgeMatrix; //1:edge else 0
 
+    /**
+     * constructor with edgeMatrix
+     * @param edgeMatrix
+     */
     public UndirectGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
@@ -22,6 +26,28 @@ public class UndirectGraph {
             }
         }
         this.edgeSize=k;
+    }
+
+    /**
+     * constructor with vertexSize
+     * @param vertexSize
+     */
+    public UndirectGraph(int vertexSize) {
+        if (vertexSize < 1) {
+            System.out.println("vertexSize should more than 2");
+            return;
+        }
+
+        int[][] edgeMatrix = new int[vertexSize][vertexSize];
+        for (int i = 0; i < vertexSize; i++) {
+            for (int j = 0; j < vertexSize; j++) {
+                edgeMatrix[i][j] = 0;
+            }
+        }
+        this.edgeMatrix = edgeMatrix;
+        this.vertexSize = vertexSize;
+        this.edgeSize = 0;
+
     }
 
     /***
@@ -71,17 +97,7 @@ public class UndirectGraph {
         return maxdeg;
     }
 
-
-
-
-
-
-
-
-
-
-
-    //
+    //getter and setter
     public int getVertexSize() {
         return vertexSize;
     }
