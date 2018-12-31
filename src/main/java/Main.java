@@ -27,21 +27,36 @@ public class Main {
          */
 
         datasetName=
+
+                /*====undirect graph test data====*/
+
 //                "testdata/undirectgraph6";
 //                "testdata/undirectgraph7";
-//                "testdata/undirectgraph18";
+                "testdata/undirectgraph18";
+
+                /*====undirect graph data set====*/
 
 //                "processdata/CA-AstroPh.txt";
 //                "processdata/CA-CondMat.txt";
 //                "processdata/CA-GrQc.txt";
 //                "processdata/com-dblp.ungraph.txt";
 //                "processdata/p2p-Gnutella08.txt";        //check
-                "processdata/p2p-Gnutella09.txt";        //check
+//                "processdata/p2p-Gnutella09.txt";        //check
 //                "processdata/p2p-Gnutella31.txt";
 //                "processdata/roadNet-TX.txt";
 
+
+                 /*====probabilistic graph test data====*/
+
+//                "testdata/prograph";
+
+
+                 /*====undirect graph data set====*/
+//                "processdata/CA-AstroPh.txt";
+
+
         /**
-         * Distributed Core Decomposition
+         * ============Distributed Core Decomposition=================
          */
         DistributedCore distributedCore = new DistributedCore();
         ArrayList<ResultSet> resultSetArrayList=distributedCore.run(datasetName);
@@ -53,8 +68,10 @@ public class Main {
 
 
         /**
-         * Distributed Eta-Core Decomposition
+         * ============Distributed Eta-Core Decomposition================
          */
+
+
 
 
     }

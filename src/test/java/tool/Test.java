@@ -16,15 +16,24 @@ public class Test {
     public static void main(String[] args) {
 
 
+        for (int i = 0; i <= 0; i++) {
+            System.out.println("hehe");
 
-        String line="1\t2\t0.941";
-        String[] lineArray = line.split("\t");
-        int v = Integer.parseInt(lineArray[0]); //better than new Integer()
-        int u = new Integer(lineArray[1]);
-        double p = Double.parseDouble(lineArray[2]);
-        System.out.println("u:" + u);
-        System.out.println("v:" + v);
-        System.out.println("p:" + p);
+        }
+
+
+//        double p = 0.001;
+//        System.out.println(p);
+//
+
+//        String line="1\t2\t0.941";
+//        String[] lineArray = line.split("\t");
+//        int v = Integer.parseInt(lineArray[0]); //better than new Integer()
+//        int u = new Integer(lineArray[1]);
+//        double p = Double.parseDouble(lineArray[2]);
+//        System.out.println("u:" + u);
+//        System.out.println("v:" + v);
+//        System.out.println("p:" + p);
 
 //        int a=10;
 //        System.out.println(new Double(1)/a);
@@ -90,7 +99,6 @@ public class Test {
 
 /*        int[][] matrix = new int[2][2];
         System.out.println("matrix.length:"+matrix.length);*/
-
 
 
     }

@@ -89,6 +89,8 @@ public class WeightedGraph {
         return neigborsList;
     }
 
+    //TODO:get one vertex's neighbor edge weight list
+
 
     /***
      * get the maxdegree
