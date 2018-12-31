@@ -15,7 +15,7 @@ public class UndirectGraph {
     public UndirectGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
-        int m=edgeMatrix.length;
+        int m=edgeMatrix[0].length;
         this.vertexSize=m;
         int k=0;
         for (int i = 0; i < m; i++) {

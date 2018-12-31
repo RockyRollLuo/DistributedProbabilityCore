@@ -4,6 +4,7 @@
 
 package model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ProbabilityGraph {
@@ -96,6 +97,7 @@ public class ProbabilityGraph {
 
     /**
      * get one vertex eta degree
+     * Pr[deg(v)>=k]>=eta
      *
      * @param vertex
      * @param eta:   a  given threshold
@@ -104,10 +106,16 @@ public class ProbabilityGraph {
     public int getVertexEtaDegree(int vertex, double eta) {
         int etaDeg = 0;
         int k = 0;
-        while (proVertexDegMoreThanK(vertex, k) < eta) {
+
+        // IMPORTANT!! double leixing de bijiao
+        BigDecimal bigDecimal1=new BigDecimal(proVertexDegMoreThanK(vertex,k));
+        BigDecimal bigDecimal2=new BigDecimal(eta);
+
+        while ((bigDecimal1.compareTo(bigDecimal2))==1) {
             k++;  //the case k<dv have consider in the proVertexDegMoreThanK
+            bigDecimal1=new BigDecimal(proVertexDegMoreThanK(vertex,k));
         }
-        etaDeg = k;
+        etaDeg = k-1;
         return etaDeg;
     }
 
@@ -126,7 +134,7 @@ public class ProbabilityGraph {
             return p;
         }
         ArrayList<Double> adjacentEdgesList = getVertexAdjacentEdgesList(vertex);
-        p = Xfunc(degree, i, adjacentEdgesList);
+        p = func(degree, i, adjacentEdgesList);
         return p;
     }
 
@@ -142,20 +150,18 @@ public class ProbabilityGraph {
      * @param adjacentEdgesList
      * @return
      */
-    private double Xfunc(int h, int j, ArrayList<Double> adjacentEdgesList) {
-        double p = 0;
+    private double func(int h, int j, ArrayList<Double> adjacentEdgesList) {
         int dv = adjacentEdgesList.size();
         if (h < 0 || h > dv) {
-            return p;
+            return 0.0;
         } else if (h == 0 && j == 0) {
-            return 1;
+            return 1.0;
         } else if (j == -1 || j > h) {
-            return 0;
+            return 0.0;
         } else {
             //if h is the index  of edge ,then the ph=adjacentEdgesList.get(h-1);
-            p = adjacentEdgesList.get(h - 1) * Xfunc(h - 1, j - 1, adjacentEdgesList) + (1 - adjacentEdgesList.get(h - 1)) * Xfunc(h - 1, j, adjacentEdgesList);
+            return adjacentEdgesList.get(h - 1) * func(h - 1, j - 1, adjacentEdgesList) + (1 - adjacentEdgesList.get(h - 1)) * func(h - 1, j, adjacentEdgesList);
         }
-        return p;
     }
 
 
@@ -175,10 +181,15 @@ public class ProbabilityGraph {
         if (k > degree || k < 0) {
             return p;
         }
-        for (int i = 0; i < k; i++) {
+//        for (int i = 0; i < k; i++) {
+//            p += proVertexDegEquali(vertex, i);
+//        }
+//        return 1 - p;
+
+        for (int i = k; i <= degree; i++) {
             p += proVertexDegEquali(vertex, i);
         }
-        return 1 - p;
+        return p;
     }
 
 

@@ -71,7 +71,7 @@ public class Main {
         /**
          * ============Distributed Eta-Core Decomposition================
          */
-        double eta = 0.01;
+        double eta = 0.5;
         DistributedEtaCore distributedEtaCore = new DistributedEtaCore();
         ArrayList<ResultSet> resultSetArrayList1 = distributedEtaCore.run(datasetName, eta);
         for (ResultSet rs : resultSetArrayList1) {
