@@ -1,4 +1,5 @@
 import algorithm.DistributedCore;
+import algorithm.DistributedEtaCore;
 import model.ResultSet;
 import org.apache.log4j.Logger;
 
@@ -9,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String datasetName="";
+        String datasetName = "";
 
         /***
          * dataset stasitics
@@ -26,15 +27,15 @@ public class Main {
          *
          */
 
-        datasetName=
+        datasetName =
 
                 /*====undirect graph test data====*/
 
 //                "testdata/undirectgraph6";
 //                "testdata/undirectgraph7";
-                "testdata/undirectgraph18";
+//                "testdata/undirectgraph18";
 
-                /*====undirect graph data set====*/
+        /*====undirect graph data set====*/
 
 //                "processdata/CA-AstroPh.txt";
 //                "processdata/CA-CondMat.txt";
@@ -46,32 +47,37 @@ public class Main {
 //                "processdata/roadNet-TX.txt";
 
 
-                 /*====probabilistic graph test data====*/
+        /*====probabilistic graph test data====*/
 
-//                "testdata/prograph";
+                "testdata/prograph4";
 
 
-                 /*====undirect graph data set====*/
+        /*====undirect graph data set====*/
 //                "processdata/CA-AstroPh.txt";
 
 
         /**
          * ============Distributed Core Decomposition=================
          */
-        DistributedCore distributedCore = new DistributedCore();
-        ArrayList<ResultSet> resultSetArrayList=distributedCore.run(datasetName);
-
-        for (ResultSet rs : resultSetArrayList) {
-            LOGGER.info(rs.getRoundNo()+" "+rs.getChangedNum()+" "+rs.getNoChangedNum()+" "+rs.getRoundTime());
-            LOGGER.info(rs.getEstCoreList().toString());
-        }
+//        DistributedCore distributedCore = new DistributedCore();
+//        ArrayList<ResultSet> resultSetArrayList = distributedCore.run(datasetName);
+//
+//        for (ResultSet rs : resultSetArrayList) {
+//            LOGGER.info(rs.getRoundNo() + " " + rs.getChangedNum() + " " + rs.getNoChangedNum() + " " + rs.getRoundTime());
+//            LOGGER.info(rs.getEstCoreList().toString());
+//        }
 
 
         /**
          * ============Distributed Eta-Core Decomposition================
          */
-
-
+        double eta = 0.5;
+        DistributedEtaCore distributedEtaCore = new DistributedEtaCore();
+        ArrayList<ResultSet> resultSetArrayList1 = distributedEtaCore.run(datasetName, eta);
+        for (ResultSet rs : resultSetArrayList1) {
+            LOGGER.info(rs.getRoundNo() + " " + rs.getChangedNum() + " " + rs.getNoChangedNum() + " " + rs.getRoundTime());
+            LOGGER.info(rs.getEstCoreList().toString());
+        }
 
 
     }

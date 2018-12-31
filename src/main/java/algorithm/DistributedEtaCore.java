@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class DistributedEtaCore {
     private static Logger LOGGER = Logger.getLogger(DistributedEtaCore.class);
 
-    public ArrayList<ResultSet> run(String datasetName) {
+    public ArrayList<ResultSet> run(String datasetName, double eta) {
         LOGGER.info("===Start Run: DistributedEtaCore===");
         ArrayList<Integer> allVerticsEstCore = new ArrayList<Integer>(); //all vertics core
 
@@ -47,8 +47,8 @@ public class DistributedEtaCore {
 
         for (int i = 0; i < vertexSize; i++) {
             DeterminVertex determinVertex = new DeterminVertex(i);
-            determinVertex.setEstCore(undirectGraph.getVertexDegree(i));  //initial estCore=degree
-            determinVertex.setNeighbors(undirectGraph.getVertexNeigbors(i));
+            determinVertex.setEstCore(probabilityGraph.getVertexEtaDegree(i, eta));  //initial estCore= eta-degree
+            determinVertex.setNeighbors(probabilityGraph.getVertexNeigborsIdList(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
 //        LOGGER.info("===DONE: initial vertices");
@@ -66,6 +66,7 @@ public class DistributedEtaCore {
         long roundTime=0;
         while (true) {
             startTime = System.currentTimeMillis(); //round start time;
+
             LOGGER.info("==Start: ROUND: " + round);
 
             /**
@@ -147,16 +148,13 @@ public class DistributedEtaCore {
         for (int i = 0; i < k + 1; i++) {
             count[i] = 0;
         }
-
         for (int j : neighborsEstCore) {
             int index = ((k < j) ? k : j);
             count[index] = count[index] + 1;
         }
-
         for (int i = k; i > 1; i--) {
             count[i - 1] = count[i - 1] + count[i];
         }
-
         int ret = k;
         while (ret > 1 & count[ret] < ret) {
             ret = ret - 1;

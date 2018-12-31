@@ -197,4 +197,32 @@ public class ProbabilityGraph {
         }
         return maxdeg;
     }
+
+
+    /**
+     * getter and setter
+     */
+    public int getVertexSize() {
+        return vertexSize;
+    }
+
+    public void setVertexSize(int vertexSize) {
+        this.vertexSize = vertexSize;
+    }
+
+    public int getEdgeSize() {
+        return edgeSize;
+    }
+
+    public void setEdgeSize(int edgeSize) {
+        this.edgeSize = edgeSize;
+    }
+
+    public double[][] getEdgeMatrix() {
+        return edgeMatrix;
+    }
+
+    public void setEdgeMatrix(double[][] edgeMatrix) {
+        this.edgeMatrix = edgeMatrix;
+    }
 }

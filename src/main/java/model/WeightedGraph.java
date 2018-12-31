@@ -19,14 +19,15 @@ public class WeightedGraph {
 
     /**
      * constructor with edgeMatrix
+     *
      * @param edgeMatrix
      */
     public WeightedGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
-        int m=edgeMatrix.length;
-        this.vertexSize=m;
-        int k=0;
+        int m = edgeMatrix.length;
+        this.vertexSize = m;
+        int k = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
                 if (edgeMatrix[i][j] != 0) {
@@ -34,11 +35,12 @@ public class WeightedGraph {
                 }
             }
         }
-        this.edgeSize=k;
+        this.edgeSize = k;
     }
 
     /**
      * constructor with vertexSize
+     *
      * @param vertexSize
      */
     public WeightedGraph(int vertexSize) {
@@ -64,9 +66,9 @@ public class WeightedGraph {
      * @param vertex
      * @return
      */
-    public int getVertexDegree(int vertex){
-        int deg=0;
-        for (int j = 0; j <edgeMatrix[vertex].length ; j++) {
+    public int getVertexDegree(int vertex) {
+        int deg = 0;
+        for (int j = 0; j < edgeMatrix[vertex].length; j++) {
             if (edgeMatrix[vertex][j] != 0) {
                 deg++;
             }
@@ -89,7 +91,21 @@ public class WeightedGraph {
         return neigborsList;
     }
 
-    //TODO:get one vertex's neighbor edge weight list
+
+    /**
+     * get one vertex's neighbor edge weight list
+     * @param vertex
+     * @return
+     */
+    public ArrayList<Integer> getAdjacentEdgesWeightList(int vertex) {
+        ArrayList<Integer> adjacentEdgesWeightList = new ArrayList<Integer>();
+        for (int i = 0; i < vertexSize; i++) {
+            if (edgeMatrix[vertex][i] != 0) {
+                adjacentEdgesWeightList.add(edgeMatrix[vertex][i]);
+            }
+        }
+        return adjacentEdgesWeightList;
+    }
 
 
     /***
@@ -97,12 +113,12 @@ public class WeightedGraph {
      * @return
      */
     public int getMaxdegree() {
-        int maxdeg=0;
-        int deg=0;
+        int maxdeg = 0;
+        int deg = 0;
         for (int i = 0; i < vertexSize; i++) {
-            deg=getVertexDegree(i);
+            deg = getVertexDegree(i);
             if (deg > maxdeg) {
-                maxdeg=deg;
+                maxdeg = deg;
             }
         }
         return maxdeg;
