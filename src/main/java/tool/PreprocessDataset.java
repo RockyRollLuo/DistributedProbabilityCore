@@ -12,6 +12,11 @@ import java.util.HashSet;
 public class PreprocessDataset {
     private static Logger LOGGER = Logger.getLogger(PreprocessDataset.class);
 
+
+    /***
+     * get dataset the max-index,min-index, and vertex num
+     * @param args
+     */
     public static void main(String[] args) {
 
 
@@ -54,12 +59,9 @@ public class PreprocessDataset {
 
         if (vertexSet != null && vertexSet.size() > 0) {
             int len = vertexSet.size();
-
             System.out.println("vertexSize:" + len);
             System.out.println("maxIndex:"+maxIndex); //the vertex should be 1 bigger than it (+1)
             System.out.println("minIndex:"+minIndex);
-
-
         }
 
     }

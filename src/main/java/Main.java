@@ -1,4 +1,5 @@
 import algorithm.DistributedCore;
+import model.ResultSet;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -34,8 +35,8 @@ public class Main {
 //                "processdata/CA-CondMat.txt";
 //                "processdata/CA-GrQc.txt";
 //                "processdata/com-dblp.ungraph.txt";
-                "processdata/p2p-Gnutella08.txt";        //check
-//                "processdata/p2p-Gnutella09.txt";        //check
+//                "processdata/p2p-Gnutella08.txt";        //check
+                "processdata/p2p-Gnutella09.txt";        //check
 //                "processdata/p2p-Gnutella31.txt";
 //                "processdata/roadNet-TX.txt";
 
@@ -43,8 +44,18 @@ public class Main {
          * Distributed Core Decomposition
          */
         DistributedCore distributedCore = new DistributedCore();
-        ArrayList<Integer> verticsCore1=distributedCore.run(datasetName);
-        LOGGER.info("Vertex final Core: "+verticsCore1.toString());
+        ArrayList<ResultSet> resultSetArrayList=distributedCore.run(datasetName);
+
+        for (ResultSet rs : resultSetArrayList) {
+            LOGGER.info(rs.getRoundNo()+" "+rs.getChangedNum()+" "+rs.getNoChangedNum()+" "+rs.getRoundTime());
+            LOGGER.info(rs.getEstCoreList().toString());
+        }
+
+
+        /**
+         * Distributed Eta-Core Decomposition
+         */
+
 
     }
 }

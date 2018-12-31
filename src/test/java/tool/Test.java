@@ -15,11 +15,22 @@ public class Test {
 
     public static void main(String[] args) {
 
-        int a=10;
-        System.out.println(new Double(1)/a);
 
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.MIN_VALUE);
+
+        String line="1\t2\t0.941";
+        String[] lineArray = line.split("\t");
+        int v = Integer.parseInt(lineArray[0]); //better than new Integer()
+        int u = new Integer(lineArray[1]);
+        double p = Double.parseDouble(lineArray[2]);
+        System.out.println("u:" + u);
+        System.out.println("v:" + v);
+        System.out.println("p:" + p);
+
+//        int a=10;
+//        System.out.println(new Double(1)/a);
+//
+//        System.out.println(Integer.MAX_VALUE);
+//        System.out.println(Integer.MIN_VALUE);
 
 
 //        HashSet<Integer> set = new HashSet<Integer>();
@@ -77,8 +88,8 @@ public class Test {
 //            System.out.println(e.getEstCore());
 //        }
 
-        int[][] matrix = new int[2][2];
-        System.out.println("matrix.length:"+matrix.length);
+/*        int[][] matrix = new int[2][2];
+        System.out.println("matrix.length:"+matrix.length);*/
 
 
 

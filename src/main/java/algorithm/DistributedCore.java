@@ -5,38 +5,37 @@
 package algorithm;
 
 import model.DeterminVertex;
+import model.ResultSet;
 import model.UndirectGraph;
 import org.apache.log4j.Logger;
 import tool.ReadData;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DistributedCore {
     private static Logger LOGGER = Logger.getLogger(DistributedCore.class);
 
-    public ArrayList<Integer> run(String datasetName) {
+    public ArrayList<ResultSet> run(String datasetName) {
         LOGGER.info("===Start Run: DistributedCore===");
-        ArrayList<Integer> allVerticsEstCore=new ArrayList<Integer>(); //all vertics core
+        ArrayList<Integer> allVerticsEstCore = new ArrayList<Integer>(); //all vertics core
 
         /**
          * ===read graph===
-         *
          */
         if (datasetName == null || datasetName.length() < 1) {
             LOGGER.error("====!datasetName error!=====");
             return null;
         }
 
-        UndirectGraph undirectGraph=null;
+        UndirectGraph undirectGraph = null;
         try {
-            undirectGraph= ReadData.readUndirectGraph(datasetName);
+            undirectGraph = ReadData.readUndirectGraph(datasetName);
         } catch (IOException e) {
-            LOGGER.error("read dataset error:",e);
+            LOGGER.error("read dataset error:", e);
             e.printStackTrace();
         }
-        LOGGER.info("===DONE: read graph");
+//        LOGGER.info("===DONE: read graph");
 
         /**
          *  ===initial vertex===
@@ -51,46 +50,48 @@ public class DistributedCore {
             determinVertex.setNeighbors(undirectGraph.getVertexNeigbors(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
-        LOGGER.info("===DONE: initial vertices");
+//        LOGGER.info("===DONE: initial vertices");
 
 
         /**
          * ===vertice send messages loop===
          */
-        int round=0;
-        while(true){
+        ArrayList<ResultSet> resultSetsList = new ArrayList<ResultSet>();
+        int round = 0;
+        int noChangedNum = 0;
+        int changedNum = 0;
+        long startTime=0;
+        long endtime=0;
+        long roundTime=0;
+        while (true) {
+            startTime = System.currentTimeMillis(); //round start time;
+            LOGGER.info("==Start: ROUND: " + round);
 
             /**
              * ===check no changed (changed=false) number===
              */
-            int noChangedNum=0;
+            noChangedNum = 0;
             allVerticsEstCore.clear();
             for (DeterminVertex e : verticesList) {
                 allVerticsEstCore.add(e.getEstCore());
-                if(e.isChanged() == false){
+                if (e.isChanged() == false) {
                     noChangedNum++;
                 }
             }
-            LOGGER.info("==DONE: check no changed number: " + noChangedNum + ". Percent:" + new Double(noChangedNum) / vertexSize);
-//            LOGGER.info("All estCore: "+ allVerticsEstCore.toString());
+            LOGGER.info("==round" + round + ".  No changed number: " + noChangedNum);
 
-            if (noChangedNum == vertexSize) {
-                LOGGER.info("======!!!ALL VERTICES HAVE CONVERGE!!!======");
-                break;
-            }
 
             /**
              * ===get message to neighbors===
              * whatever who haved changed,
-             * becouse in distributed eviroment, after changed then send message to update
-             *
+             * because in distributed environment, after changed then send message to update the neighbor's information
              * ===re-computing estmate core===
-             *
              */
+            LOGGER.info("==round:" + round + ". re-computing estmate core");
             ArrayList<Integer> neighbors = new ArrayList<Integer>();
-            DeterminVertex determinVertex=null;
+            DeterminVertex determinVertex = null;
             for (int i = 0; i < verticesList.size(); i++) {
-                determinVertex=verticesList.get(i);
+                determinVertex = verticesList.get(i);
                 ArrayList<Integer> neighborsEstCore = new ArrayList<Integer>();
                 neighbors = determinVertex.getNeighbors(); //get neighbors index
                 //all neighbors
@@ -106,12 +107,31 @@ public class DistributedCore {
                     determinVertex.setChanged(true);
                 }
             }
+            LOGGER.info("==DONE round: " + round);
+            endtime = System.currentTimeMillis();
+            roundTime = endtime - startTime;
 
+
+            /**
+             * ===collect current resultset
+             */
+            changedNum = vertexSize - noChangedNum;
+            ResultSet resultSet = new ResultSet(round, roundTime, changedNum, noChangedNum, allVerticsEstCore);
+            resultSetsList.add(resultSet);
+
+            /**
+             * ===exit the loop===
+             * when all vertices's core no more change, we have get the final result
+             */
+            if (noChangedNum == vertexSize) {
+                LOGGER.info("======!!!ALL VERTICES HAVE CONVERGE!!!======");
+                break;
+            }
+
+            //next loop
             round++;
-            LOGGER.info("==DNOE: re-computing estmate core, ROUND:"+round);
         }
-
-        return allVerticsEstCore;
+        return resultSetsList;
     }
 
     /***
@@ -123,7 +143,7 @@ public class DistributedCore {
      */
     private int computedIndex(ArrayList<Integer> neighborsEstCore, int vertexId, int k) {
         int[] count = new int[k + 1];
-        for (int i = 0; i < k+1; i++) {
+        for (int i = 0; i < k + 1; i++) {
             count[i] = 0;
         }
 
@@ -136,7 +156,7 @@ public class DistributedCore {
             count[i - 1] = count[i - 1] + count[i];
         }
 
-        int ret=k;
+        int ret = k;
         while (ret > 1 & count[ret] < ret) {
             ret = ret - 1;
         }

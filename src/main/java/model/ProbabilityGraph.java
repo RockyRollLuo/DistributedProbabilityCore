@@ -66,10 +66,11 @@ public class ProbabilityGraph {
      * @return
      */
     public int getVertexEtaDegree(int vertex, double eta) {
+        //TODO:eta degree
         int etaDeg = 0;
         for (int j = 0; j < vertexSize; j++) {
 
-        //TODO:eta degree
+
 
         }
 
