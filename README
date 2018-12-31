@@ -5,3 +5,11 @@
 ### Core Decomposition in Uncertain Graph
 
 ### Distributed $\eta$-core in Probabilistic Graph
+
+
+run the algorithm
+
+VM options
+-Xms4096m -Xmx4096m -Dfile.encoding=UTF-8
+
+maybe bigger
