@@ -30,6 +30,8 @@ public class ResultProcess {
          */
 
 
+
+
         /*
          * TODO:in final round, min core and max core
          */
