@@ -43,8 +43,8 @@ public class Main {
 //                "processdata/CA-GrQc.txt";
 //                "processdata/com-dblp.ungraph.txt";
 //                "processdata/p2p-Gnutella08.txt";        //check
-                "processdata/p2p-Gnutella09.txt";        //check
-//                "processdata/p2p-Gnutella31.txt";
+//                "processdata/p2p-Gnutella09.txt";        //check
+                "processdata/p2p-Gnutella31.txt";          //check after ad
 //                "processdata/roadNet-TX.txt";
 
 
@@ -64,12 +64,10 @@ public class Main {
         ArrayList<ResultSet> resultSetArrayList = distributedCore.run(datasetName);
 
         for (ResultSet rs : resultSetArrayList) {
-            LOGGER.info("roundNo:"+rs.getRoundNo() + " changedNum:" + rs.getChangedNum() + " noChangedNum:" + rs.getNoChangedNum() + " roundTime:" + rs.getRoundTime());
+            LOGGER.info("roundNo:" + rs.getRoundNo() + " changedNum:" + rs.getChangedNum() + " noChangedNum:" + rs.getNoChangedNum() + " roundTime:" + rs.getRoundTime());
 //            LOGGER.info(rs.getEstCoreList().toString());
             ResultProcess.processOneResultSet(rs);
         }
-
-
 
 
         /**

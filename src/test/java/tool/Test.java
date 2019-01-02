@@ -7,14 +7,40 @@ package tool;
 import model.DeterminVertex;
 import org.apache.log4j.Logger;
 
+import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Test {
     private static Logger LOGGER = Logger.getLogger(Test.class);
 
+    private static volatile Instrumentation instru;
+    public static void premain(String args, Instrumentation inst) {
+        instru = inst;
+    }
+    public static Long getSizeOf(Object object) {
+        if (instru == null) {
+            throw new IllegalStateException("Instrumentation is null");
+        }
+        return instru.getObjectSize(object);
+    }
+
+
     public static void main(String[] args) {
 
+
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        for (int i = 0; i < 300; i++) {
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            for (int j = 0; j < 20; i++) {
+                list.add(j);
+            }
+            map.put(i, list);
+        }
+
+        System.out.println("The size of map  is : "+getSizeOf(map));
+        
 
         for (int i = 0; i <= 0; i++) {
             System.out.println("hehe");

@@ -1,7 +1,7 @@
 /**
  * User: RockyRoll
  * Date: 2018-12-29
- * Undirect Graph Vertex
+ * Undirect IntGraph Vertex
  */
 
 package model;

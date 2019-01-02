@@ -11,7 +11,7 @@ import model.ResultSet;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 
 public class ResultProcess {
     private static Logger LOGGER = Logger.getLogger(ResultProcess.class);
@@ -68,13 +68,14 @@ public class ResultProcess {
 
     public static void processOneResultSet(ResultSet resultSet) {
         ArrayList<Integer> coreList = resultSet.getEstCoreList();
-        ArrayList<Integer> core_number = new ArrayList<Integer>();
+        int maxCore = Collections.max(coreList);
+        int minCore = Collections.min(coreList);
+        int[] core_number = new int[maxCore + 1]; //0 ,1 , 2, …… ,maxCore   total:maxCore+1
 
         for (int core : coreList) {
-            int orig = (core_number.get(core) == null) ? 0 : core_number.get(core);
-            core_number.set(core, orig + 1);
+            core_number[core] = core_number[core] + 1;
         }
-        LOGGER.info("core distribution: " + core_number.toString());
+        LOGGER.info("core distribution: " );
     }
 
 

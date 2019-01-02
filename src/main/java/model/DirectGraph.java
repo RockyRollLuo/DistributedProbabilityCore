@@ -1,5 +1,5 @@
 /**
- * Direct Graph
+ * Direct IntGraph
  */
 
 package model;
