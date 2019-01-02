@@ -6,9 +6,9 @@
 package database.base;
 
 
-public class IntEdge {
-
-
+public class IntEdge{
+    private int id;
+    private int datasetId;
     private int headNo;
     private int tailNo;
     private int weight;
@@ -16,10 +16,19 @@ public class IntEdge {
     public IntEdge() {
     }
 
-    public IntEdge(int headNo, int tailNo, int weight) {
+    public IntEdge(int datasetId, int headNo, int tailNo, int weight) {
+        this.datasetId = datasetId;
         this.headNo = headNo;
         this.tailNo = tailNo;
         this.weight = weight;
+    }
+
+    public int getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(int datasetId) {
+        this.datasetId = datasetId;
     }
 
     public int getHeadNo() {
