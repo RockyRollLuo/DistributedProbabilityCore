@@ -10,11 +10,14 @@ import java.io.Reader;
 public class DBTools {
     public static SqlSessionFactory sessionFactory;
 
+    public static final String CONGIG_PATH="mybatis.cfg.xml";
+
     static{
         try {
             //使用MyBatis提供的Resources类加载mybatis的配置文件
-            Reader reader = Resources.getResourceAsReader("mybatis.cfg.xml");
+            Reader reader = Resources.getResourceAsReader(CONGIG_PATH);
             //构建sqlSession的工厂
+
             sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,5 +28,12 @@ public class DBTools {
     public static SqlSession getSession(){
         return sessionFactory.openSession();
     }
+
+
+    public static void closeSession(SqlSession sqlSession) {
+        sqlSession.close();
+    }
+
+
 
 }

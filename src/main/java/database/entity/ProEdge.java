@@ -1,4 +1,4 @@
-package database.base;
+package database.entity;
 
 public class ProEdge {
     private int id;

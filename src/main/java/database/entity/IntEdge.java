@@ -3,7 +3,7 @@
  * Date: 2019-01-02
  */
 
-package database.base;
+package database.entity;
 
 
 public class IntEdge{

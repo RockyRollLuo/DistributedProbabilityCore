@@ -1,6 +1,6 @@
 package database.Service;
 
-import database.base.IntEdge;
+import database.entity.IntEdge;
 import database.mapper.IntEdgeMapper;
 import database.tool.DBTools;
 import org.apache.ibatis.session.SqlSession;

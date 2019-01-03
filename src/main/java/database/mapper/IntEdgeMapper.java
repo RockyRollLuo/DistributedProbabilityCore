@@ -1,6 +1,6 @@
 package database.mapper;
 
-import database.base.IntEdge;
+import database.entity.IntEdge;
 
 import java.util.ArrayList;
 
