@@ -29,13 +29,8 @@ public class DistributedCore {
         }
 
         UndirectGraph undirectGraph = null;
-        try {
-            undirectGraph = ReadData.readUndirectGraph(datasetName);
-        } catch (IOException e) {
-            LOGGER.error("read dataset error:", e);
-            e.printStackTrace();
-        }
-//        LOGGER.info("===DONE: read graph");
+        undirectGraph = ReadData.readUndirectGraph(datasetName);
+        //        LOGGER.info("===DONE: read graph");
 
         /**
          *  ===initial vertex===
