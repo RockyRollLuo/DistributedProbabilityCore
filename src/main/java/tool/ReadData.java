@@ -18,7 +18,7 @@ public class ReadData {
      * @return undirect graoh
      * @throws IOException
      */
-    public static UndirectGraph readUndirectGraph(String datasetName) throws IOException {
+    public static UndirectGraph readUndirectGraph(String datasetName){
         LOGGER.info("===starting=== readUndirectGraph");
 
         String filePath = datasetRoot + datasetName;

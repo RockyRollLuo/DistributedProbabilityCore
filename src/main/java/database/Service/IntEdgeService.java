@@ -7,15 +7,12 @@ import org.apache.ibatis.session.SqlSession;
 
 public class IntEdgeService {
 
-    public void insertEdge() {
+    public void insertEdge(IntEdge intEdge) {
         SqlSession session = DBTools.getSession();
         IntEdgeMapper mapper = session.getMapper(IntEdgeMapper.class);
-
-        IntEdge edge=new IntEdge(1,0,1,1);
-
         try {
-            mapper.insertEdge(edge);
-            System.out.println("insert edge");
+            mapper.insertEdge(intEdge);
+            System.out.println("inserting edge");
             session.commit();
 
         } catch (Exception e) {
@@ -23,6 +20,6 @@ public class IntEdgeService {
             session.rollback();
         }
 
-
+        DBTools.closeSession(session);
     }
 }

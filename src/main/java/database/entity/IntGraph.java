@@ -10,13 +10,16 @@ public class IntGraph {
     private int edgeSize;
     private ArrayList<IntEdge> edgeList;
 
+    private String description;
+
     public IntGraph() {
     }
 
-    public IntGraph(String datasetName, int vertexSize, int edgeSize) {
+    public IntGraph(String datasetName, int vertexSize, int edgeSize, String description) {
         this.datasetName = datasetName;
         this.vertexSize = vertexSize;
         this.edgeSize = edgeSize;
+        this.description = description;
     }
 
     public int getId() {
@@ -57,5 +60,13 @@ public class IntGraph {
 
     public void setEdgeList(ArrayList<IntEdge> edgeList) {
         this.edgeList = edgeList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
