@@ -18,7 +18,7 @@ public class IntEdgeService {
         try {
             int result=mapper.insertEdge(edge);
             if (result > 0) {
-                System.out.println("Successful insert edge fa ");
+                System.out.println("Successful insert edge ");
                 session.commit();
             }
         } catch (Exception e) {

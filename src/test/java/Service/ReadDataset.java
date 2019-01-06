@@ -8,13 +8,12 @@ public class ReadDataset {
 
         ReadDatasetService readDatasetService = new ReadDatasetService();
 
-        String datasetName="origdata/p2p-Gnutella31.txt";
+        String datasetName=
+//                "origdata/p2p-Gnutella08.txt";
+                "origdata/com-dblp.ungraph.txt";
 
 
         readDatasetService.readDataset(datasetName);
-
-
-
 
 
 

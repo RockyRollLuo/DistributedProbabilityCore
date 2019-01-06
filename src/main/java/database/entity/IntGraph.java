@@ -8,7 +8,7 @@ public class IntGraph {
     private String datasetName;
     private int vertexSize;
     private int edgeSize;
-    private ArrayList<IntEdge> edgeList;
+    private ArrayList<IntEdge> edgeList; //don't
 
     private String description;
 

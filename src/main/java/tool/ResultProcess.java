@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class ResultProcess {
     private static Logger LOGGER = Logger.getLogger(ResultProcess.class);
@@ -35,10 +36,6 @@ public class ResultProcess {
         }
         LOGGER.info("final round core distribution: " + core_number.toString());
 
-
-        /**
-         * TODO:in each round, each core number and percent
-         */
 
 
 
@@ -66,6 +63,28 @@ public class ResultProcess {
     }
 
 
+    /**
+     * TODO:in each round, each core numbers percent
+     */
+    public static void processOneResultSet1(ResultSet resultSet) {
+        ArrayList<Integer> coreList = resultSet.getEstCoreList();
+        ArrayList<Float> precentList = new ArrayList<Float>();
+        int maxCore = Collections.max(coreList);
+        int minCore = Collections.min(coreList);
+        HashMap<Integer, Float> percentMap = new HashMap<Integer, Float>();
+        for (int core : coreList) {
+
+
+        }
+
+
+        LOGGER.info("core distribution :");
+    }
+
+    /**
+     *
+     * @param resultSet
+     */
     public static void processOneResultSet(ResultSet resultSet) {
         ArrayList<Integer> coreList = resultSet.getEstCoreList();
         int maxCore = Collections.max(coreList);

@@ -37,7 +37,7 @@ public class ReadData {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
             line = br.readLine();
 
-            if (line.indexOf("#") > -1) {
+            while (line.indexOf("#") > -1) {
                 line = br.readLine();   //ignore the comment in dataset
             }
 

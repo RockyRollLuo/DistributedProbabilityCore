@@ -24,8 +24,4 @@ public interface IntEdgeMapper {
     public ArrayList<Integer> getAjacentVertics(int headNo) throws Exception;
 
 
-
-
-
-
 }
