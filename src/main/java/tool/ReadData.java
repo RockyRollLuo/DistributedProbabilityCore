@@ -72,7 +72,7 @@ public class ReadData {
     }
 
 
-    public static ProbabilityGraph readProbabilityGraph(String datasetName) throws IOException {
+    public static ProbabilityGraph readProbabilityGraph(String datasetName){
         LOGGER.info("===starting=== readProbabilityGraph");
 
         String filePath = datasetRoot + datasetName;
