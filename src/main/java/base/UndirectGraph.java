@@ -1,49 +1,38 @@
-/**
- * User: RockyRoll
- * Date: 2018-12-30
- */
-
-package model;
-
-import org.apache.log4j.Logger;
+package base;
 
 import java.util.ArrayList;
 
-public class WeightedGraph {
-    private static Logger LOGGER = Logger.getLogger(WeightedGraph.class);
-
+public class UndirectGraph {
     private int vertexSize;
-    private double edgeSize;
+    private int edgeSize;
 
     private int[][] edgeMatrix; //1:edge else 0
 
     /**
      * constructor with edgeMatrix
-     *
      * @param edgeMatrix
      */
-    public WeightedGraph(int[][] edgeMatrix) {
+    public UndirectGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
-        int m = edgeMatrix.length;
-        this.vertexSize = m;
-        int k = 0;
+        int m=edgeMatrix[0].length;
+        this.vertexSize=m;
+        int k=0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
-                if (edgeMatrix[i][j] != 0) {
+                if (edgeMatrix[i][j] == 1) {
                     k++;
                 }
             }
         }
-        this.edgeSize = k;
+        this.edgeSize=k;
     }
 
     /**
      * constructor with vertexSize
-     *
      * @param vertexSize
      */
-    public WeightedGraph(int vertexSize) {
+    public UndirectGraph(int vertexSize) {
         if (vertexSize < 1) {
             System.out.println("vertexSize should more than 2");
             return;
@@ -66,10 +55,10 @@ public class WeightedGraph {
      * @param vertex
      * @return
      */
-    public int getVertexDegree(int vertex) {
-        int deg = 0;
-        for (int j = 0; j < edgeMatrix[vertex].length; j++) {
-            if (edgeMatrix[vertex][j] != 0) {
+    public int getVertexDegree(int vertex){
+        int deg=0;
+        for (int j = 0; j <edgeMatrix[vertex].length ; j++) {
+            if (edgeMatrix[vertex][j] == 1) {
                 deg++;
             }
         }
@@ -84,27 +73,11 @@ public class WeightedGraph {
     public ArrayList<Integer> getVertexNeigbors(int vertex) {
         ArrayList<Integer> neigborsList = new ArrayList<Integer>();
         for (int j = 0; j < this.edgeMatrix[vertex].length; j++) {
-            if (edgeMatrix[vertex][j] != 0) {
+            if (edgeMatrix[vertex][j] == 1) {
                 neigborsList.add(j);
             }
         }
         return neigborsList;
-    }
-
-
-    /**
-     * get one vertex's neighbor edge weight list
-     * @param vertex
-     * @return
-     */
-    public ArrayList<Integer> getAdjacentEdgesWeightList(int vertex) {
-        ArrayList<Integer> adjacentEdgesWeightList = new ArrayList<Integer>();
-        for (int i = 0; i < vertexSize; i++) {
-            if (edgeMatrix[vertex][i] != 0) {
-                adjacentEdgesWeightList.add(edgeMatrix[vertex][i]);
-            }
-        }
-        return adjacentEdgesWeightList;
     }
 
 
@@ -113,16 +86,43 @@ public class WeightedGraph {
      * @return
      */
     public int getMaxdegree() {
-        int maxdeg = 0;
-        int deg = 0;
+        int maxdeg=0;
+        int deg=0;
         for (int i = 0; i < vertexSize; i++) {
-            deg = getVertexDegree(i);
+            deg=getVertexDegree(i);
             if (deg > maxdeg) {
-                maxdeg = deg;
+                maxdeg=deg;
             }
         }
         return maxdeg;
     }
+
+
+    /**
+     * the function just remove the edge, the vertexSize don't change
+     * the edgeSize don't change ,because I don't want to code
+     * @param vertex
+     */
+    public void removeOneVertex(int vertex) {
+        //delete edges who adjacent to vertex
+        for (int i = 0; i < vertexSize; i++) {
+            edgeMatrix[i][vertex] = 0;
+        }
+        for (int j = 0; j < vertexSize; j++) {
+            edgeMatrix[vertex][j] = 0;
+        }
+        //re-compute edgeSize
+        int newEdgeSize = 0;
+        for (int i = 0; i < vertex; i++) {
+            for (int j = 0; j < vertex; j++) {
+                if (edgeMatrix[i][j] != 0) {
+                    newEdgeSize++;
+                }
+            }
+        }
+        edgeSize = newEdgeSize;
+    }
+
 
     //getter and setter
     public int getVertexSize() {
@@ -133,11 +133,11 @@ public class WeightedGraph {
         this.vertexSize = vertexSize;
     }
 
-    public double getEdgeSize() {
+    public int getEdgeSize() {
         return edgeSize;
     }
 
-    public void setEdgeSize(double edgeSize) {
+    public void setEdgeSize(int edgeSize) {
         this.edgeSize = edgeSize;
     }
 

@@ -1,45 +1,51 @@
 /**
- * Direct IntGraph
+ * User: RockyRoll
+ * Date: 2018-12-30
  */
 
-package model;
+package base;
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
-public class DirectGraph {
+public class WeightedGraph {
+    private static Logger LOGGER = Logger.getLogger(WeightedGraph.class);
+
     private int vertexSize;
-    private int edgeSize;
+    private double edgeSize;
 
     private int[][] edgeMatrix; //1:edge else 0
 
     /**
      * constructor with edgeMatrix
+     *
      * @param edgeMatrix
      */
-    public DirectGraph(int[][] edgeMatrix) {
+    public WeightedGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
-        int m=edgeMatrix.length;
-        this.vertexSize=m;
-        int k=0;
+        int m = edgeMatrix.length;
+        this.vertexSize = m;
+        int k = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
-                if (edgeMatrix[i][j] == 1) {
+                if (edgeMatrix[i][j] != 0) {
                     k++;
                 }
             }
         }
-        this.edgeSize=k;
+        this.edgeSize = k;
     }
 
     /**
      * constructor with vertexSize
-     * there is no edges
+     *
      * @param vertexSize
      */
-    public DirectGraph(int vertexSize) {
+    public WeightedGraph(int vertexSize) {
         if (vertexSize < 1) {
-            System.out.println("vertexSize should more than 1");
+            System.out.println("vertexSize should more than 2");
             return;
         }
 
@@ -56,33 +62,18 @@ public class DirectGraph {
     }
 
     /***
-     * get one vertex Out degree
+     * get one vertex degree
      * @param vertex
      * @return
      */
-    public int getVertexOutDegree(int vertex){
-        int outdeg=0;
-        for (int j = 0; j <edgeMatrix[vertex].length ; j++) {
-            if (edgeMatrix[vertex][j] == 1) {
-                outdeg++;
+    public int getVertexDegree(int vertex) {
+        int deg = 0;
+        for (int j = 0; j < edgeMatrix[vertex].length; j++) {
+            if (edgeMatrix[vertex][j] != 0) {
+                deg++;
             }
         }
-        return outdeg;
-    }
-
-    /**
-     * get one vertex In degree
-     * @param vertex
-     * @return
-     */
-    public int getVertexInDegree(int vertex){
-        int indeg=0;
-        for (int i = 0; i <edgeMatrix[vertex].length ; i++) {
-            if (edgeMatrix[i][vertex] == 1) {
-                indeg++;
-            }
-        }
-        return indeg;
+        return deg;
     }
 
     /***
@@ -93,13 +84,45 @@ public class DirectGraph {
     public ArrayList<Integer> getVertexNeigbors(int vertex) {
         ArrayList<Integer> neigborsList = new ArrayList<Integer>();
         for (int j = 0; j < this.edgeMatrix[vertex].length; j++) {
-            if (edgeMatrix[vertex][j] == 1) {
+            if (edgeMatrix[vertex][j] != 0) {
                 neigborsList.add(j);
             }
         }
         return neigborsList;
     }
 
+
+    /**
+     * get one vertex's neighbor edge weight list
+     * @param vertex
+     * @return
+     */
+    public ArrayList<Integer> getAdjacentEdgesWeightList(int vertex) {
+        ArrayList<Integer> adjacentEdgesWeightList = new ArrayList<Integer>();
+        for (int i = 0; i < vertexSize; i++) {
+            if (edgeMatrix[vertex][i] != 0) {
+                adjacentEdgesWeightList.add(edgeMatrix[vertex][i]);
+            }
+        }
+        return adjacentEdgesWeightList;
+    }
+
+
+    /***
+     * get the maxdegree
+     * @return
+     */
+    public int getMaxdegree() {
+        int maxdeg = 0;
+        int deg = 0;
+        for (int i = 0; i < vertexSize; i++) {
+            deg = getVertexDegree(i);
+            if (deg > maxdeg) {
+                maxdeg = deg;
+            }
+        }
+        return maxdeg;
+    }
 
     //getter and setter
     public int getVertexSize() {
@@ -110,11 +133,11 @@ public class DirectGraph {
         this.vertexSize = vertexSize;
     }
 
-    public int getEdgeSize() {
+    public double getEdgeSize() {
         return edgeSize;
     }
 
-    public void setEdgeSize(int edgeSize) {
+    public void setEdgeSize(double edgeSize) {
         this.edgeSize = edgeSize;
     }
 

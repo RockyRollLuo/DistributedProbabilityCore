@@ -2,7 +2,7 @@
  * edge with probability p in [0,1]
  */
 
-package model;
+package base;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

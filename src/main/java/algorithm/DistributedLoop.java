@@ -5,8 +5,8 @@
 
 package algorithm;
 
-import model.DeterminVertex;
-import model.ResultSet;
+import base.DeterminVertex;
+import base.ResultSet;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -109,14 +109,17 @@ public class DistributedLoop {
         }
 
         for (int j : neighborsEstCore) {
-            int index = ((k < j) ? k : j);
+            int index = Math.min(k, j);
             count[index] = count[index] + 1;
+
         }
 
+        //the neighbors num greater than core vlaue
         for (int i = k; i > 1; i--) {
             count[i - 1] = count[i - 1] + count[i];
         }
 
+        //the maximum core number(k) has at least k neighbors
         int ret = k;
         while (ret > 1 & count[ret] < ret) {
             ret = ret - 1;

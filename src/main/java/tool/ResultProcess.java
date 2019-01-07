@@ -7,7 +7,7 @@
 
 package tool;
 
-import model.ResultSet;
+import base.ResultSet;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

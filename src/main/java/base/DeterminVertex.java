@@ -4,7 +4,7 @@
  * Undirect IntGraph Vertex
  */
 
-package model;
+package base;
 
 import org.apache.log4j.Logger;
 

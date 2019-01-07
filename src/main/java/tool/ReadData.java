@@ -1,7 +1,7 @@
 package tool;
 
-import model.ProbabilityGraph;
-import model.UndirectGraph;
+import base.ProbabilityGraph;
+import base.UndirectGraph;
 import org.apache.log4j.Logger;
 
 import java.io.*;

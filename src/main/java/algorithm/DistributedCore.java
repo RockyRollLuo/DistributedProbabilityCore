@@ -4,13 +4,12 @@
  */
 package algorithm;
 
-import model.DeterminVertex;
-import model.ResultSet;
-import model.UndirectGraph;
+import base.DeterminVertex;
+import base.ResultSet;
+import base.UndirectGraph;
 import org.apache.log4j.Logger;
 import tool.ReadData;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DistributedCore {

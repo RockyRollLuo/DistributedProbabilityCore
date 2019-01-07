@@ -1,8 +1,12 @@
-package model;
+/**
+ * Direct IntGraph
+ */
+
+package base;
 
 import java.util.ArrayList;
 
-public class UndirectGraph {
+public class DirectGraph {
     private int vertexSize;
     private int edgeSize;
 
@@ -12,10 +16,10 @@ public class UndirectGraph {
      * constructor with edgeMatrix
      * @param edgeMatrix
      */
-    public UndirectGraph(int[][] edgeMatrix) {
+    public DirectGraph(int[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
 
-        int m=edgeMatrix[0].length;
+        int m=edgeMatrix.length;
         this.vertexSize=m;
         int k=0;
         for (int i = 0; i < m; i++) {
@@ -30,11 +34,12 @@ public class UndirectGraph {
 
     /**
      * constructor with vertexSize
+     * there is no edges
      * @param vertexSize
      */
-    public UndirectGraph(int vertexSize) {
+    public DirectGraph(int vertexSize) {
         if (vertexSize < 1) {
-            System.out.println("vertexSize should more than 2");
+            System.out.println("vertexSize should more than 1");
             return;
         }
 
@@ -51,18 +56,33 @@ public class UndirectGraph {
     }
 
     /***
-     * get one vertex degree
+     * get one vertex Out degree
      * @param vertex
      * @return
      */
-    public int getVertexDegree(int vertex){
-        int deg=0;
+    public int getVertexOutDegree(int vertex){
+        int outdeg=0;
         for (int j = 0; j <edgeMatrix[vertex].length ; j++) {
             if (edgeMatrix[vertex][j] == 1) {
-                deg++;
+                outdeg++;
             }
         }
-        return deg;
+        return outdeg;
+    }
+
+    /**
+     * get one vertex In degree
+     * @param vertex
+     * @return
+     */
+    public int getVertexInDegree(int vertex){
+        int indeg=0;
+        for (int i = 0; i <edgeMatrix[vertex].length ; i++) {
+            if (edgeMatrix[i][vertex] == 1) {
+                indeg++;
+            }
+        }
+        return indeg;
     }
 
     /***
@@ -80,22 +100,6 @@ public class UndirectGraph {
         return neigborsList;
     }
 
-
-    /***
-     * get the maxdegree
-     * @return
-     */
-    public int getMaxdegree() {
-        int maxdeg=0;
-        int deg=0;
-        for (int i = 0; i < vertexSize; i++) {
-            deg=getVertexDegree(i);
-            if (deg > maxdeg) {
-                maxdeg=deg;
-            }
-        }
-        return maxdeg;
-    }
 
     //getter and setter
     public int getVertexSize() {

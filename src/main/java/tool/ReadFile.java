@@ -1,6 +1,5 @@
 package tool;
 
-import model.UndirectGraph;
 import org.apache.log4j.Logger;
 
 import java.io.*;

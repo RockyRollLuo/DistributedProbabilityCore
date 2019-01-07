@@ -4,13 +4,11 @@
  */
 package tool;
 
-import model.DeterminVertex;
 import org.apache.log4j.Logger;
 
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class Test {
     private static Logger LOGGER = Logger.getLogger(Test.class);
