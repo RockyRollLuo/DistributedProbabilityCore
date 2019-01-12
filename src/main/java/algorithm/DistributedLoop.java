@@ -85,7 +85,11 @@ public class DistributedLoop {
              * when all vertices's core no more change, we have get the final result
              */
             if (noChangedNum == vertexSize) {
-                LOGGER.info("======!!!ALL VERTICES HAVE CONVERGE!!!======");
+                LOGGER.warn("======!!!ALL VERTICES HAVE CONVERGE!!!======");
+                break;
+            }
+            if (round == 60) {
+                LOGGER.warn("======!!!CANNOT CONVERGE!!!======");
                 break;
             }
 

@@ -5,45 +5,50 @@
 package tool;
 
 import org.apache.log4j.Logger;
+import sun.misc.Unsafe;
 
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Test {
     private static Logger LOGGER = Logger.getLogger(Test.class);
 
-    private static volatile Instrumentation instru;
-    public static void premain(String args, Instrumentation inst) {
-        instru = inst;
-    }
-    public static Long getSizeOf(Object object) {
-        if (instru == null) {
-            throw new IllegalStateException("Instrumentation is null");
-        }
-        return instru.getObjectSize(object);
-    }
+    //FIXME:
+
 
 
     public static void main(String[] args) {
 
 
-        HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
-        for (int i = 0; i < 300; i++) {
-            ArrayList<Integer> list = new ArrayList<Integer>();
-            for (int j = 0; j < 20; i++) {
-                list.add(j);
-            }
-            map.put(i, list);
-        }
 
-        System.out.println("The size of map  is : "+getSizeOf(map));
-        
 
-        for (int i = 0; i <= 0; i++) {
-            System.out.println("hehe");
+//        boolean[][] booleans = new boolean[2][2];
+//        for (int i = 0; i < 2; i++) {
+//            for (int j = 0; j < 2; j++) {
+//                System.out.println("booleans:"+booleans[i][j]);
+//            }
+//
+//        }
 
-        }
+
+//        HashMap<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+//        for (int i = 0; i < 300; i++) {
+//            ArrayList<Integer> list = new ArrayList<Integer>();
+//            for (int j = 0; j < 20; i++) {
+//                list.add(j);
+//            }
+//            map.put(i, list);
+//        }
+//
+//        System.out.println("The size of map  is : "+getSizeOf(map));
+//
+//
+//        for (int i = 0; i <= 0; i++) {
+//            System.out.println("hehe");
+//
+//        }
 
 
 //        double p = 0.001;

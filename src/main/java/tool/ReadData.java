@@ -1,6 +1,7 @@
 package tool;
 
 import base.ProbabilityGraph;
+import base.SimpleGraph;
 import base.UndirectGraph;
 import org.apache.log4j.Logger;
 
@@ -10,6 +11,62 @@ public class ReadData {
     private static Logger LOGGER = Logger.getLogger(ReadData.class);
 
     private static String datasetRoot = System.getProperty("user.dir") + "\\dataset\\";
+
+
+    /**
+     * read a simple graph,  no direction no weight
+     * @param datasetName
+     * @return
+     */
+    public static SimpleGraph readSimpleGraph(String datasetName) {
+        LOGGER.info("===starting=== readSimpleGraph");
+
+        String filePath = datasetRoot + datasetName;
+        LOGGER.info("datasetname: " + datasetName);
+
+        String line;
+
+        int vertexSize;
+        boolean[][] edgeMatrix = null;
+        String[] edge;
+        int headV;
+        int tailV;
+
+        try {
+//            LOGGER.info("==start== read file:");
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+            line = br.readLine();
+
+            while (line.indexOf("#") > -1) {
+                line = br.readLine();   //ignore the comment in dataset
+            }
+
+            LOGGER.info("vertextsize:" + line);
+            vertexSize = Integer.parseInt(line);
+            edgeMatrix = new boolean[vertexSize][vertexSize];
+
+//            LOGGER.info("==start== read edges");
+            for (line = br.readLine(); line != null; line = br.readLine()) {
+                edge = line.split("\t");
+                headV = Integer.parseInt(edge[0]);
+                tailV = Integer.parseInt(edge[1]);
+                edgeMatrix[headV][tailV] = true;
+                edgeMatrix[tailV][headV] = true;  //undirect graph
+            }
+            br.close();
+        } catch (IOException e1) {
+            LOGGER.error("IO error");
+            System.out.println("readSimpleGraph: " + e1);
+        } catch (OutOfMemoryError e2) {
+            LOGGER.error("Out of memory error");
+            System.out.println("readSimpleGraph: " + e2);
+        }
+
+        SimpleGraph simpleGraph = new SimpleGraph(edgeMatrix);
+        return simpleGraph;
+    }
+
+
 
     /**
      * read a dataset

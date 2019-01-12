@@ -2,7 +2,7 @@ package base;
 
 import java.util.ArrayList;
 
-public class UndirectGraph {
+public class UndirectGraph implements Graph{
     private int vertexSize;
     private int edgeSize;
 
