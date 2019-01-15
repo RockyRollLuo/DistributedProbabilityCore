@@ -12,7 +12,7 @@ import tool.ReadData;
 
 import java.util.ArrayList;
 
-public class DistributedEtaCore {
+public class DistributedEtaCore implements DistributedAlgorithm {
     private static Logger LOGGER = Logger.getLogger(DistributedEtaCore.class);
 
     public ArrayList<ResultSet> run(String datasetName, double eta) {
@@ -53,5 +53,10 @@ public class DistributedEtaCore {
 
 
         return resultSetsList;
+    }
+
+
+    public ArrayList<ResultSet> run(String datasetName) {
+        return null;
     }
 }

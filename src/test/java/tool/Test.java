@@ -15,13 +15,15 @@ import java.util.HashMap;
 public class Test {
     private static Logger LOGGER = Logger.getLogger(Test.class);
 
-    //FIXME:
-
-
 
     public static void main(String[] args) {
 
-
+        float a = (float) 0.00000000000000000000000000001;
+        if (a == 0) {
+            System.out.println("equal");
+        } else {
+            System.out.println("not equal");
+        }
 
 
 //        boolean[][] booleans = new boolean[2][2];

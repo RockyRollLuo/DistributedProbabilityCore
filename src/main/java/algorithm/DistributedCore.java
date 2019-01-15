@@ -12,7 +12,7 @@ import tool.ReadData;
 
 import java.util.ArrayList;
 
-public class DistributedCore {
+public class DistributedCore implements DistributedAlgorithm {
     private static Logger LOGGER = Logger.getLogger(DistributedCore.class);
 
     public ArrayList<ResultSet> run(String datasetName) {
@@ -54,4 +54,7 @@ public class DistributedCore {
         return resultSetsList;
     }
 
+    public ArrayList<ResultSet> run(String datasetName, double eta) {
+        return null;
+    }
 }
