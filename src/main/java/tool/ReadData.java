@@ -72,7 +72,7 @@ public class ReadData {
      * read a dataset
      *
      * @param datasetName
-     * @return undirect graoh
+     * @return undirect graph , can be weighted graph
      * @throws IOException
      */
     public static UndirectGraph readUndirectGraph(String datasetName){
@@ -101,11 +101,7 @@ public class ReadData {
             LOGGER.info("vertextsize:" + line);
             vertexSize = Integer.parseInt(line);
             edgeMatrix = new int[vertexSize][vertexSize];
-            for (int i = 0; i < vertexSize; i++) {
-                for (int j = 0; j < vertexSize; j++) {
-                    edgeMatrix[i][j] = 0;
-                }
-            }
+
 
 //            LOGGER.info("==start== read edges");
             for (line = br.readLine(); line != null; line = br.readLine()) {
@@ -129,6 +125,12 @@ public class ReadData {
     }
 
 
+    /**
+     *  read a no weighted graph
+     *  may have direction
+     * @param datasetName
+     * @return
+     */
     public static ProbabilityGraph readProbabilityGraph(String datasetName){
         LOGGER.info("===starting=== readProbabilityGraph");
 
@@ -150,11 +152,7 @@ public class ReadData {
             LOGGER.info("==start== read vertextsize:" + line);
             vertexSize = new Integer(line);
             edgeMatrix = new double[vertexSize][vertexSize];
-//            for (int i = 0; i < vertexSize; i++) {
-//                for (int j = 0; j < vertexSize; j++) {
-//                    edgeMatrix[i][j] = 0;
-//                }
-//            }
+
 
             LOGGER.info("==start== read edges");
             for (line = br.readLine(); line != null; line = br.readLine()) {

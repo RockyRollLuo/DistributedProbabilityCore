@@ -19,21 +19,15 @@ public class DistributedCore implements DistributedAlgorithm {
         LOGGER.info("===Start Run: DistributedCore===");
         ArrayList<Integer> allVerticsEstCore = new ArrayList<Integer>(); //all vertics core
 
-        /**
-         * ===read graph===
-         */
+        /**===read graph===**/
         if (datasetName == null || datasetName.length() < 1) {
             LOGGER.error("====!datasetName error!=====");
             return null;
         }
 
         UndirectGraph undirectGraph = ReadData.readUndirectGraph(datasetName);
-        //        LOGGER.info("===DONE: read graph");
 
-        /**
-         *  ===initial vertex===
-         *  neighbors, estcore
-         */
+        /**===initial vertex===**/
         int vertexSize = undirectGraph.getVertexSize();
         ArrayList<DeterminVertex> verticesList = new ArrayList<DeterminVertex>(vertexSize);
 
@@ -43,14 +37,8 @@ public class DistributedCore implements DistributedAlgorithm {
             determinVertex.setNeighbors(undirectGraph.getVertexNeigbors(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
-//        LOGGER.info("===DONE: initial vertices");
-
-
-        /**
-         * ===vertice send messages loop===
-         */
+        /**===vertice send messages loop===**/
         ArrayList<ResultSet> resultSetsList = DistributedLoop.startLoop(allVerticsEstCore, verticesList);
-
         return resultSetsList;
     }
 

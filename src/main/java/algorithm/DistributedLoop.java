@@ -14,18 +14,17 @@ import java.util.ArrayList;
 public class DistributedLoop {
     private static Logger LOGGER = Logger.getLogger(DistributedLoop.class);
 
-    public static ArrayList<ResultSet> startLoop(ArrayList<Integer> allVerticsEstCore, ArrayList<DeterminVertex> verticesList ){
-        int vertexSize=verticesList.size();
+    public static ArrayList<ResultSet> startLoop(ArrayList<Integer> allVerticsEstCore, ArrayList<DeterminVertex> verticesList) {
+        int vertexSize = verticesList.size();
         ArrayList<ResultSet> resultSetsList = new ArrayList<ResultSet>();
         int round = 0;
         int noChangedNum = 0;
         int changedNum = 0;
-        long startTime=0;
-        long endtime=0;
-        long roundTime=0;
+        long startTime = 0;
+        long endtime = 0;
+        long roundTime = 0;
         while (true) {
             startTime = System.currentTimeMillis(); //round start time;
-
             LOGGER.info("==Start: ROUND: " + round);
 
             /**
@@ -40,7 +39,6 @@ public class DistributedLoop {
                 }
             }
             LOGGER.info("==round" + round + ".  No changed number: " + noChangedNum);
-
 
             /**
              * ===get message to neighbors===
@@ -58,7 +56,6 @@ public class DistributedLoop {
                 //all neighbors
                 for (int vertexId : neighbors) {
                     neighborsEstCore.add(verticesList.get(vertexId).getEstCore());
-
                     verticesList.get(vertexId).setChanged(false); //after use neighbor's core, set false
                 }
 
@@ -71,7 +68,6 @@ public class DistributedLoop {
             LOGGER.info("==DONE round: " + round);
             endtime = System.currentTimeMillis();
             roundTime = endtime - startTime;
-
 
             /**
              * ===collect current resultset
@@ -100,7 +96,6 @@ public class DistributedLoop {
     }
 
     /***
-     *
      * @param neighborsEstCore u's neigborsCore
      * @param vertexId u
      * @param k u's core
@@ -130,6 +125,5 @@ public class DistributedLoop {
         }
         return ret;
     }
-
 
 }

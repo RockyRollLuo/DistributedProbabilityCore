@@ -26,6 +26,10 @@ public class Test {
         }
 
 
+        HashMap<Integer, String> map;
+
+
+
 //        boolean[][] booleans = new boolean[2][2];
 //        for (int i = 0; i < 2; i++) {
 //            for (int j = 0; j < 2; j++) {

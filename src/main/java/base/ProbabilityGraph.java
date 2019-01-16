@@ -35,7 +35,7 @@ public class ProbabilityGraph {
      */
     public ProbabilityGraph(double[][] edgeMatrix) {
         this.edgeMatrix = edgeMatrix;
-        this.vertexSize = edgeMatrix.length;
+        this.vertexSize = edgeMatrix[0].length;
         int k = 0;
         for (int i = 0; i < vertexSize; i++) {
             for (int j = 0; j < vertexSize; j++) {
@@ -121,7 +121,7 @@ public class ProbabilityGraph {
 
     /**
      * the probability of a vertex have degree i.
-     * Pr[deg(v)=i] i=0,1,2,……,dv  (dv is max-degree of v)
+     * Pr[deg(v)=i] i=0,1,2,,,dv  (dv is max-degree of v)
      *
      * @param vertex
      * @param i
@@ -168,8 +168,8 @@ public class ProbabilityGraph {
     /**
      * the probability of a vertex have degree more than k
      * Pr[deg[v]>=k]
-     * = (the sum fo all Pr[deg(v)=i]) i=k,k+1,……,dv
-     * = 1-(the sum of all Pr[deg(v)=i]) i=0,1,2,……,k-1
+     * = (the sum fo all Pr[deg(v)=i]) i=k,k+1,,,dv
+     * = 1-(the sum of all Pr[deg(v)=i]) i=0,1,2,,,k-1
      *
      * @param vertex
      * @param k

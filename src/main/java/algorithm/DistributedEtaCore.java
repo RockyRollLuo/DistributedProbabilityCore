@@ -19,21 +19,15 @@ public class DistributedEtaCore implements DistributedAlgorithm {
         LOGGER.info("===Start Run: DistributedEtaCore===");
         ArrayList<Integer> allVerticsEstCore = new ArrayList<Integer>(); //all vertics core
 
-        /**
-         * ===read graph===
-         */
+        /**===read graph===*/
         if (datasetName == null || datasetName.length() < 1) {
             LOGGER.error("====!datasetName error!=====");
             return null;
         }
 
         ProbabilityGraph probabilityGraph = ReadData.readProbabilityGraph(datasetName);
-        //        LOGGER.info("===DONE: read graph");
 
-        /**
-         *  ===initial vertex===
-         *  neighbors, estcore
-         */
+        /**===initial vertex===**/
         int vertexSize = probabilityGraph.getVertexSize();
         ArrayList<DeterminVertex> verticesList = new ArrayList<DeterminVertex>(vertexSize);
 
@@ -43,15 +37,9 @@ public class DistributedEtaCore implements DistributedAlgorithm {
             determinVertex.setNeighbors(probabilityGraph.getVertexNeigborsIdList(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
-//        LOGGER.info("===DONE: initial vertices");
 
-
-        /**
-         * ===vertices send messages loop===
-         */
+        /** ===vertices send messages loop===**/
         ArrayList<ResultSet> resultSetsList = DistributedLoop.startLoop(allVerticsEstCore, verticesList);
-
-
         return resultSetsList;
     }
 

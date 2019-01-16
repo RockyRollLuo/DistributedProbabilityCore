@@ -7,7 +7,6 @@ package algorithm;
 import base.DeterminVertex;
 import base.ResultSet;
 import base.SimpleGraph;
-import base.UndirectGraph;
 import org.apache.log4j.Logger;
 import tool.ReadData;
 
@@ -20,21 +19,15 @@ public class DistributedSimpleCore implements DistributedAlgorithm {
         LOGGER.info("===Start Run: DistributedSimpleCore===");
         ArrayList<Integer> allVerticsEstCore = new ArrayList<Integer>(); //all vertics core
 
-        /**
-         * ===read graph===
-         */
+        /**===read graph===**/
         if (datasetName == null || datasetName.length() < 1) {
             LOGGER.error("====!datasetName error!=====");
             return null;
         }
 
         SimpleGraph simpleGraph = ReadData.readSimpleGraph(datasetName);
-        //        LOGGER.info("===DONE: read graph");
 
-        /**
-         *  ===initial vertex===
-         *  neighbors, estcore
-         */
+        /**===initial vertex===**/
         int vertexSize = simpleGraph.getVertexSize();
         ArrayList<DeterminVertex> verticesList = new ArrayList<DeterminVertex>(vertexSize);
 
@@ -44,14 +37,9 @@ public class DistributedSimpleCore implements DistributedAlgorithm {
             determinVertex.setNeighbors(simpleGraph.getVertexNeigbors(i));
             verticesList.add(determinVertex);  //important, ALL vertex's information
         }
-//        LOGGER.info("===DONE: initial vertices");
 
-
-        /**
-         * ===vertice send messages loop===
-         */
+        /**===vertice send messages loop===**/
         ArrayList<ResultSet> resultSetsList = DistributedLoop.startLoop(allVerticsEstCore, verticesList);
-
         return resultSetsList;
     }
 
