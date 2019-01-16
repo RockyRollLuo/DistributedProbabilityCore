@@ -10,8 +10,18 @@ import java.io.*;
 public class ReadData {
     private static Logger LOGGER = Logger.getLogger(ReadData.class);
 
-    private static String datasetRoot = System.getProperty("user.dir") + "\\dataset\\";
+    //Determine the operating system type
+    private static String osType = System.getProperty("os.name");
+    private static String dirStr="/dataset/";
+    static{
+        if (osType.indexOf("Windows") > -1) {
+            dirStr="\\dataset\\";
+        } else if (osType.indexOf("Linux") > -1) {
+            dirStr="/dataset/";
+        }
+    }
 
+    private static String datasetRoot = System.getProperty("user.dir") + dirStr;
 
     /**
      * read a simple graph,  no direction no weight

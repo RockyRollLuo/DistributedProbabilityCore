@@ -18,16 +18,15 @@ public class Test {
 
     public static void main(String[] args) {
 
-        float a = (float) 0.00000000000000000000000000001;
-        if (a == 0) {
-            System.out.println("equal");
-        } else {
-            System.out.println("not equal");
-        }
+        String osType = System.getProperty("os.name");
+        System.out.println("ostype: "+osType);
 
-
-        HashMap<Integer, String> map;
-
+//        float a = (float) 0.00000000000000000000000000001;
+//        if (a == 0) {
+//            System.out.println("equal");
+//        } else {
+//            System.out.println("not equal");
+//        }
 
 
 //        boolean[][] booleans = new boolean[2][2];
